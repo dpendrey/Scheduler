@@ -36,5 +36,60 @@ namespace SchedulerLib
                     Writer.Write(",");
             }
         }
+
+        public void Enact(Task Task)
+        {
+            switch (type)
+            {
+                #region Windows power options
+                case ActionType.Hibernate:
+                    System.Windows.Forms.Application.SetSuspendState(System.Windows.Forms.PowerState.Hibernate, true, true);
+                    break;
+                case ActionType.ShutDown:
+                    {
+                        System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("shutdown", "/s /t 0");
+                        psi.CreateNoWindow = true;
+                        psi.UseShellExecute = false;
+                        System.Diagnostics.Process.Start(psi);
+                    }
+                    break;
+                case ActionType.Sleep:
+                    System.Windows.Forms.Application.SetSuspendState(System.Windows.Forms.PowerState.Hibernate, true, true);
+                    break;
+                case ActionType.Reboot:
+                    {
+                        System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("shutdown", "/r /t 0");
+                        psi.CreateNoWindow = true;
+                        psi.UseShellExecute = false;
+                        System.Diagnostics.Process.Start(psi);
+                    }
+                    break;
+                #endregion
+                #region Execution
+                case ActionType.ExecuteClass:
+                    throw new NotImplementedException();
+                case ActionType.RunProgram:
+                    {
+                        System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(runData[0], runData[1]);
+                        psi.CreateNoWindow = true;
+                        psi.UseShellExecute = false;
+                        System.Diagnostics.Process.Start(psi);
+                    }
+                    break;
+                #endregion
+                #region Basics
+                case ActionType.PlayVideo:
+                case ActionType.PlaySong:
+                    throw new NotImplementedException();
+                case ActionType.ShowMessage:
+                    System.Windows.Forms.MessageBox.Show(runData[0], runData[1], System.Windows.Forms.MessageBoxButtons.OK);
+                    break;
+                #endregion
+                case ActionType.None:
+                    break;
+                default:
+                    throw new Exception();
+            }
+        }
     }
 }

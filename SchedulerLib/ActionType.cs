@@ -7,7 +7,7 @@ namespace SchedulerLib
 {
     public enum ActionType : int
     {
-        #region No action
+        #region None
         None = 0x00000000,
         #endregion
 
@@ -20,7 +20,13 @@ namespace SchedulerLib
 
         #region Execution
         RunProgram = 0x00000201,
-        ExecuteClass = 0x00000202
+        ExecuteClass = 0x00000202,
+        #endregion
+
+        #region Basics
+        PlayVideo = 0x00000301,
+        PlaySong = 0x00000302,
+        ShowMessage = 0x00000303
         #endregion
     }
 }

@@ -16,6 +16,7 @@ namespace Scheduler
             InitializeComponent();
 
             SchedulerLib.Engine.LoadTasks();
+            SchedulerLib.Engine.StartScheduling();
         }
     }
 }
