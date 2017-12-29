@@ -147,8 +147,11 @@ namespace SchedulerLib
 
                 foreach (Task t in tasksToStart)
                 {
-                    runningTasks.Add(t);
-                    t.RunTask();
+                    if (t.Status == TaskStatus.Fault || t.Status == TaskStatus.Idle || t.Status == TaskStatus.Pending)
+                    {
+                        runningTasks.Add(t);
+                        t.RunTask();
+                    }
                 }
 
                 foreach (Task t in runningTasks)

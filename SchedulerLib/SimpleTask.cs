@@ -8,10 +8,26 @@ namespace SchedulerLib
     /// <summary>
     /// A task class which makes use of Actions and StartConditions to execute
     /// </summary>
-    public abstract class SimpleTask : Task
+    public class SimpleTask : Task
     {
+        public SimpleTask()
+        { }
+        public SimpleTask(string Name)
+        {
+            name = Name;
+        }
+        public SimpleTask(string Name, StartCondition[] StartConditions,Action[] Actions)
+        {
+            name = Name;
+            startConditions = StartConditions;
+            actions = Actions;
+        }
+
         protected StartCondition[] startConditions = new StartCondition[0];
         protected Action[] actions = new Action[0];
+        private DateTime lastAttempted = DateTime.MinValue,
+            lastRun = DateTime.MinValue;
+        private string name;
         private TaskStatus status = TaskStatus.Idle;
 
         #region Conditions
@@ -97,6 +113,20 @@ namespace SchedulerLib
         }
         #endregion
 
+        public override string Name
+        {
+            get { return name; }
+        }
+
+        public override DateTime LastAttempted
+        {
+            get { return lastAttempted; }
+        }
+        public override DateTime LastRun
+        {
+            get { return lastRun; }
+        }
+
         public override bool QuickCheck()
         {
             foreach (StartCondition condition in startConditions)
@@ -123,8 +153,11 @@ namespace SchedulerLib
         protected override void runTask()
         {
             lock (lockObj)
+            {
                 if (status == TaskStatus.Pending)
                     status = TaskStatus.Running;
+                lastAttempted = DateTime.Now;
+            }
 
             foreach (Action action in actions)
                 action.Enact(this);
@@ -132,8 +165,11 @@ namespace SchedulerLib
 
 
             lock (lockObj)
+            {
                 if (status == TaskStatus.Running)
                     status = TaskStatus.Idle;
+                lastRun = DateTime.Now;
+            }
         }
 
         public override TaskStatus Status

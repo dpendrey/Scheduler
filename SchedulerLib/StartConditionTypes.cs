@@ -58,6 +58,18 @@ namespace SchedulerLib
         /// The task runs on weekend days
         /// </summary>
         WeekendSchedule = 0x0000010A,
+        /// <summary>
+        /// Run every hour (data1 specifies minutes past the hour it is run)
+        /// </summary>
+        HourlyAt = 0x00000110,
+        /// <summary>
+        /// Run every day (data1 specifies minutes past the hour, data2 specifies hours past midnight)
+        /// </summary>
+        DailyAt = 0x00000111,
+        /// <summary>
+        /// Runs every week (data1 specifies minutes past the hour, data2 specifies hours past midnight, data3 specifies day of the week)
+        /// </summary>
+        WeeklyAt = 0x00000112,
         #endregion
         #region Timed retry conditions
         MinuteRetry = 0x00000123,

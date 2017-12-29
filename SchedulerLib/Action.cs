@@ -7,6 +7,15 @@ namespace SchedulerLib
 {
     public class Action
     {
+        public Action(ActionType ActionType, string[] RunData)
+        {
+            type = ActionType;
+            runData = RunData;
+        }
+        public Action()
+        {
+        }
+
         private ActionType type;
         private string[] runData;
 

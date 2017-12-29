@@ -13,6 +13,55 @@ namespace SchedulerLib
         private StartConditionTypes type;
         private object data1, data2, data3, data4, data5;
 
+        public StartCondition()
+        {
+        }
+
+        public StartCondition(StartConditionTypes ConditionType)
+        {
+            type = ConditionType;
+        }
+
+        public StartCondition(StartConditionTypes ConditionType, object ConditionData1)
+        {
+            type = ConditionType;
+            data1 = ConditionData1;
+        }
+
+        public StartCondition(StartConditionTypes ConditionType, object ConditionData1, object ConditionData2)
+        {
+            type = ConditionType;
+            data1 = ConditionData1;
+            data2 = ConditionData2;
+        }
+
+        public StartCondition(StartConditionTypes ConditionType, object ConditionData1, object ConditionData2, object ConditionData3)
+        {
+            type = ConditionType;
+            data1 = ConditionData1;
+            data2 = ConditionData2;
+            data3 = ConditionData3;
+        }
+
+        public StartCondition(StartConditionTypes ConditionType, object ConditionData1, object ConditionData2, object ConditionData3, object ConditionData4)
+        {
+            type = ConditionType;
+            data1 = ConditionData1;
+            data2 = ConditionData2;
+            data3 = ConditionData3;
+            data4 = ConditionData4;
+        }
+
+        public StartCondition(StartConditionTypes ConditionType, object ConditionData1, object ConditionData2, object ConditionData3, object ConditionData4, object ConditionData5)
+        {
+            type = ConditionType;
+            data1 = ConditionData1;
+            data2 = ConditionData2;
+            data3 = ConditionData3;
+            data4 = ConditionData4;
+            data5 = ConditionData5;
+        }
+
         /// <summary>
         /// Gets/sets the type of this condition
         /// </summary>
@@ -72,6 +121,10 @@ namespace SchedulerLib
                     throw new NotImplementedException();
                 case StartConditionTypes.WeekendSchedule:
                     throw new NotImplementedException();
+                case StartConditionTypes.HourlyAt:
+                    return (Task.LastRun.AddHours(1).)
+                case StartConditionTypes.DailyAt:
+                case StartConditionTypes.WeeklyAt:
                 #endregion
 
                 #region System resource conditions
@@ -89,7 +142,9 @@ namespace SchedulerLib
                 case StartConditionTypes.InternetAccess:
                 case StartConditionTypes.OnNetwork:
                 case StartConditionTypes.DriveAccess:
+                    throw new NotImplementedException();
                 case StartConditionTypes.FolderAccess:
+                    return true;
                 case StartConditionTypes.FTPAccess:
                 #endregion
 
@@ -123,6 +178,7 @@ namespace SchedulerLib
                 case StartConditionTypes.YearlySchedule:
                 case StartConditionTypes.WeekdaySchedule:
                 case StartConditionTypes.WeekendSchedule:
+                    return true;    // Assume we've already passed since we made it through the quick test)
                 #endregion
 
                 #region System resource conditions
@@ -140,7 +196,9 @@ namespace SchedulerLib
                 case StartConditionTypes.InternetAccess:
                 case StartConditionTypes.OnNetwork:
                 case StartConditionTypes.DriveAccess:
+                    throw new NotImplementedException();
                 case StartConditionTypes.FolderAccess:
+                    return System.IO.Directory.Exists((string)data1);
                 case StartConditionTypes.FTPAccess:
                 #endregion
 
